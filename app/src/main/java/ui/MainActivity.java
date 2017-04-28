@@ -2,6 +2,7 @@ package ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -60,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId){
-            case R.id.home :
+        switch (checkedId) {
+            case R.id.home:
                 switchFragment(0);
                 break;
-            case R.id.order :
+            case R.id.order:
                 switchFragment(1);
                 break;
-            case R.id.me :
+            case R.id.me:
                 switchFragment(2);
                 break;
             case R.id.more:
@@ -76,9 +77,21 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         }
     }
 
+    //切换Fragment。
     private void switchFragment(int position) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (int i = 0; i < fragments.size(); i++) {
-
+            Fragment fragment = fragments.get(i);
+            if (position == i) {
+                if (fragment.isAdded()){
+                    transaction.show(fragment);
+                } else {
+                    transaction.add(R.id.container, fragment);
+                }
+            } else {
+                transaction.hide(fragment);
+            }
         }
+        transaction.commit();
     }
 }

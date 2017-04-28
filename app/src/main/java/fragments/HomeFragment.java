@@ -1,6 +1,9 @@
 package fragments;
 
 import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import base.Basefragment;
 
@@ -15,6 +18,8 @@ public class HomeFragment extends Basefragment{
 
     @Override
     public View initLayout() {
-        return null;
+        TextView tv=new TextView(getContext());
+        tv.setText(getClass().getSimpleName());
+        return tv;
     }
 }
